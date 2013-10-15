@@ -1,16 +1,16 @@
 var map = L.mapbox.map('map', 'caarloshugo1.map-vyysqu3h', {attributionControl: false, minZoom: 7, maxZoom:11}).setView([15.538375926292062, -90.08239746093749], 7);
 	
 /*Grupo 1*/
-var g1_tileLayer1   = L.mapbox.tileLayer('caarloshugo1.real_ml_v1').addTo(map);
-var g1_gridLayer1   = L.mapbox.gridLayer('caarloshugo1.real_ml_v1').addTo(map);
+var g1_tileLayer1   = L.mapbox.tileLayer('caarloshugo1.real_ml_v2').addTo(map);
+var g1_gridLayer1   = L.mapbox.gridLayer('caarloshugo1.real_ml_v2').addTo(map);
 var g1_gridControl1 = L.mapbox.gridControl(g1_gridLayer1, {follow: true}).addTo(map);
 
-var g1_tileLayer2   = L.mapbox.tileLayer('caarloshugo1.real_usd_v1');
-var g1_gridLayer2   = L.mapbox.gridLayer('caarloshugo1.real_usd_v1');
+var g1_tileLayer2   = L.mapbox.tileLayer('caarloshugo1.real_usd_v2');
+var g1_gridLayer2   = L.mapbox.gridLayer('caarloshugo1.real_usd_v2');
 var g1_gridControl2 = L.mapbox.gridControl(g1_gridLayer2, {follow: true});
 
-var g1_tileLayer3   = L.mapbox.tileLayer('caarloshugo1.real_total_clientes_v1');
-var g1_gridLayer3   = L.mapbox.gridLayer('caarloshugo1.real_total_clientes_v1');
+var g1_tileLayer3   = L.mapbox.tileLayer('caarloshugo1.real_total_clientes_v2');
+var g1_gridLayer3   = L.mapbox.gridLayer('caarloshugo1.real_total_clientes_v2');
 var g1_gridControl3 = L.mapbox.gridControl(g1_gridLayer3, {follow: true});
 
 var g1_tileLayer4   = L.mapbox.tileLayer('caarloshugo1.promesas_ml_v1');
