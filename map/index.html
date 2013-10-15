@@ -1,0 +1,192 @@
+<!-- [@caarloshugo] -->
+<!DOCTYPE html>
+<html>
+<head>
+		<meta charset=utf-8 />
+		<title>Adherentes La Granja</title>
+		<script src="http://d3js.org/d3.v3.min.js"></script>
+		<script src='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js'></script>
+		<link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css' rel='stylesheet' />
+		<!--[if lte IE 8]>
+			<link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css' rel='stylesheet'>
+		<![endif]-->
+		<style>
+			body { margin:0; padding:0; }
+			#map { position:absolute; top:0; bottom:0; width:100%; }
+			#onscreen {
+				position: absolute;
+				top: 10px;
+				right: 10px;
+				width: 300px;
+				height: 100px;
+				background: #fff;
+				z-index: 100;
+			
+			}
+		</style>
+	</head>
+	<body>
+		<div id='map'></div>
+		<div id="append"></div>
+		<!-- <pre id='onscreen'></pre> -->
+		
+		<script type='text/javascript'>
+			var filename      = "csv/promesas_30_septiembre_2013_guatemala.csv";
+			var map			  = L.mapbox.map('map', 'examples.map-20v6611k');
+			var features      = [];
+			var sellers       = [];
+			var departamentos = [];
+			
+			//Vars
+			var RealML        = 0;
+			var RealUSD       = 0;
+			var TotalClientes = 0;
+
+			d3.csv(filename, function(data) {
+				//Like a group by key
+				var seller = d3.nest()
+					.key(function(d) { return d.Departamento; })
+					.entries(data);
+				
+				/*
+				var seller = d3.nest()
+					.key(function(d) { return d.Vendedor; })
+					.entries(data);
+				*/
+				
+				//Foreach for each seller value
+				seller.forEach(function(row) {
+					if(row.key != "") {
+						RealML 		  = 0;
+						RealUSD       = 0;
+						TotalClientes = 0;
+						departamentos = [];
+						
+						//Sum values by seller
+						row.values.forEach(function(values) {
+							RealML        += parseFloat(values.RealML);
+							RealUSD       += parseFloat(values.RealUSD);
+							TotalClientes += parseFloat(values.TotalClientes);
+						});
+						
+						
+						/*
+						//Order by departament
+						departaments = d3.nest()
+							.key(function(d) { return d.Departamento; })
+							.entries(row.values);
+						
+						//Foreach by each selertodepartament value
+						departaments.forEach(function(departament_row) {
+							DRealML 		  = 0;
+							DRealUSD       = 0;
+							DTotalClientes = 0;
+						
+							//Sum values by sellertodepartament
+							departament_row.values.forEach(function(departament_values) {
+								DRealML        += parseFloat(departament_values.RealML);
+								DRealUSD       += parseFloat(departament_values.RealUSD);
+								DTotalClientes += parseFloat(departament_values.TotalClientes);
+							});
+							
+							departamentos.push({ key : departament_row.key, RealML : DRealML, RealUSD : DRealUSD, TotalClientes : DTotalClientes});
+						});
+						*/
+						
+						//Create array for sellers
+						//sellers.push({ key : row.key, RealML : RealML, RealUSD : RealUSD, TotalClientes : TotalClientes, Departamentos : departamentos});
+						
+						document.getElementById('append').innerHTML += row.key + ',' + RealML + ',' +  RealUSD + ',' + TotalClientes + '<br/>';
+						
+						sellers.push({ key : row.key, RealML : RealML, RealUSD : RealUSD, TotalClientes : TotalClientes});
+					}
+				});
+				
+				console.log(sellers);
+				
+				//Like a group by two keys	
+				var departaments2seller = d3.nest()
+					.key(function(d) { return d.Departamento; })
+					.key(function(d) { return d.Vendedor; })
+					.entries(data);
+				
+				//console.log(departaments2seller);
+				
+				//console.log(departaments);
+				
+				//console.log(seller);
+				
+				//console.log(departaments2seller);
+				
+				
+				//All values in this column
+				//var map  = data.map(function(d) { return d.Departamento; });
+				
+				//Only distinct values in specific column
+				
+				/*
+				var nodes = d3.keys(d3.nest()
+				   .key(function (d) { return d.Departamento; })
+				   .map(data));
+				*/
+				
+				//console.log(nodes);
+				
+				//search right
+				//var bisect = d3.bisector(function(d) { return d.Departamento; }).right;
+				
+				//search left
+				//var bisect = d3.bisector(function(d) { return d.Departamento; }).left;
+				
+				//var search = bisect(data, 'Guatemala');
+				
+				//console.log(search);
+				
+				/*
+				data.forEach(function(row) {
+					features.push({
+						type: 'Feature',
+						geometry: {
+							type: 'Point',
+							coordinates: [row.lng, row.lat]
+						},
+						properties: {
+							'marker-color': '#0261A5',
+							'marker-symbol': 'star-stroked',
+							title: "Nombre: " + row.NOMBRE + " " + row.APELLIDO + "<br/>RUT: " + row.RUT + "<br/> Teléfono: " + row.TELEFONO 
+						}
+					});
+				});
+				
+				map.markerLayer.setGeoJSON({
+					type: 'FeatureCollection',
+					features: features
+				});
+				*/
+			});
+
+			
+
+			map.on('move', function() {
+				// construct an empty list to fill with onscreen markers
+				var inBounds = [],
+				// get the map bounds - the top-left and bottom-right locations
+				bounds = map.getBounds();
+
+				// for each marker, consider whether it is currently visible by comparing
+				// with the current map bounds
+				map.markerLayer.eachLayer(function(marker) {
+					if(bounds.contains(marker.getLatLng())) {
+						inBounds.push(marker.options.title);
+					}
+				});
+
+				// display a list of markers.
+				//document.getElementById('onscreen').innerHTML = inBounds.join('\n');
+			});
+
+			map.setView([-33.5376541, -70.6179702], 15);
+		</script>
+	</body>
+</html>
+
