@@ -1,17 +1,29 @@
 var map = L.mapbox.map('map', 'caarloshugo1.map-vyysqu3h', {attributionControl: false, minZoom: 7, maxZoom:11}).setView([15.538375926292062, -90.08239746093749], 7);
 	
 /*Grupo 1*/
-var g1_tileLayer1   = L.mapbox.tileLayer('caarloshugo1.real_ml_v1').addTo(map);
-var g1_gridLayer1   = L.mapbox.gridLayer('caarloshugo1.real_ml_v1').addTo(map);
+var g1_tileLayer1   = L.mapbox.tileLayer('caarloshugo1.real_ml_v2').addTo(map);
+var g1_gridLayer1   = L.mapbox.gridLayer('caarloshugo1.real_ml_v2').addTo(map);
 var g1_gridControl1 = L.mapbox.gridControl(g1_gridLayer1, {follow: true}).addTo(map);
 
-var g1_tileLayer2   = L.mapbox.tileLayer('caarloshugo1.real_usd_v1');
-var g1_gridLayer2   = L.mapbox.gridLayer('caarloshugo1.real_usd_v1');
+var g1_tileLayer2   = L.mapbox.tileLayer('caarloshugo1.real_usd_v2');
+var g1_gridLayer2   = L.mapbox.gridLayer('caarloshugo1.real_usd_v2');
 var g1_gridControl2 = L.mapbox.gridControl(g1_gridLayer2, {follow: true});
 
-var g1_tileLayer3   = L.mapbox.tileLayer('caarloshugo1.real_total_clientes_v1');
-var g1_gridLayer3   = L.mapbox.gridLayer('caarloshugo1.real_total_clientes_v1');
+var g1_tileLayer3   = L.mapbox.tileLayer('caarloshugo1.real_total_clientes_v2');
+var g1_gridLayer3   = L.mapbox.gridLayer('caarloshugo1.real_total_clientes_v2');
 var g1_gridControl3 = L.mapbox.gridControl(g1_gridLayer3, {follow: true});
+
+var g1_tileLayer4   = L.mapbox.tileLayer('caarloshugo1.promesas_ml_v1');
+var g1_gridLayer4   = L.mapbox.gridLayer('caarloshugo1.promesas_ml_v1');
+var g1_gridControl4 = L.mapbox.gridControl(g1_gridLayer4, {follow: true});
+
+var g1_tileLayer5   = L.mapbox.tileLayer('caarloshugo1.promesas_usd_v1');
+var g1_gridLayer5   = L.mapbox.gridLayer('caarloshugo1.promesas_usd_v1');
+var g1_gridControl5 = L.mapbox.gridControl(g1_gridLayer5, {follow: true});
+
+var g1_tileLayer6   = L.mapbox.tileLayer('caarloshugo1.promesas_total_clientes_v1');
+var g1_gridLayer6   = L.mapbox.gridLayer('caarloshugo1.promesas_total_clientes_v1');
+var g1_gridControl6 = L.mapbox.gridControl(g1_gridLayer6, {follow: true});
 
 $(document).ready(function() {
 	//********* G1 ********
@@ -62,6 +74,54 @@ $(document).ready(function() {
 			this.className = 'active';
 		}
 	});
+	
+	$("#g1-layer4").click( function () {
+		removeLayersG1();
+		
+		if(this.className === 'active') {
+			map.removeLayer(g1_tileLayer4);
+			map.removeLayer(g1_gridLayer4);
+			map.removeControl(g1_gridControl4);
+			this.className = '';
+		} else {
+			map.addLayer(g1_tileLayer4);
+			map.addLayer(g1_gridLayer4);
+			map.addControl(g1_gridControl4);
+			this.className = 'active';
+		}
+	});
+	
+	$("#g1-layer5").click( function () {
+		removeLayersG1();
+		
+		if(this.className === 'active') {
+			map.removeLayer(g1_tileLayer5);
+			map.removeLayer(g1_gridLayer5);
+			map.removeControl(g1_gridControl5);
+			this.className = '';
+		} else {
+			map.addLayer(g1_tileLayer5);
+			map.addLayer(g1_gridLayer5);
+			map.addControl(g1_gridControl5);
+			this.className = 'active';
+		}
+	});
+	
+	$("#g1-layer6").click( function () {
+		removeLayersG1();
+		
+		if(this.className === 'active') {
+			map.removeLayer(g1_tileLayer6);
+			map.removeLayer(g1_gridLayer6);
+			map.removeControl(g1_gridControl6);
+			this.className = '';
+		} else {
+			map.addLayer(g1_tileLayer6);
+			map.addLayer(g1_gridLayer6);
+			map.addControl(g1_gridControl6);
+			this.className = 'active';
+		}
+	});
 });
 
 function removeLayersG1() {
@@ -84,6 +144,27 @@ function removeLayersG1() {
 		map.removeLayer(g1_gridLayer3);
 		map.removeControl(g1_gridControl3);
 		$("#g1-layer3").removeClass('active');
+	}
+	
+	if(map.hasLayer(g1_tileLayer4)) {
+		map.removeLayer(g1_tileLayer4);
+		map.removeLayer(g1_gridLayer4);
+		map.removeControl(g1_gridControl4);
+		$("#g1-layer4").removeClass('active');
+	}
+	
+	if(map.hasLayer(g1_tileLayer5)) {
+		map.removeLayer(g1_tileLayer5);
+		map.removeLayer(g1_gridLayer5);
+		map.removeControl(g1_gridControl5);
+		$("#g1-layer5").removeClass('active');
+	}
+	
+	if(map.hasLayer(g1_tileLayer6)) {
+		map.removeLayer(g1_tileLayer6);
+		map.removeLayer(g1_gridLayer6);
+		map.removeControl(g1_gridControl6);
+		$("#g1-layer6").removeClass('active');
 	}
 }
 

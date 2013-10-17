@@ -41,6 +41,10 @@
 			var RealML        = 0;
 			var RealUSD       = 0;
 			var TotalClientes = 0;
+			
+			var PRealML        = 0;
+			var PRealUSD       = 0;
+			var PTotalClientes = 0;
 
 			d3.csv(filename, function(data) {
 				//Like a group by key
@@ -60,6 +64,11 @@
 						RealML 		  = 0;
 						RealUSD       = 0;
 						TotalClientes = 0;
+						
+						PRealML 	   = 0;
+						PRealUSD       = 0;
+						PTotalClientes = 0;
+						
 						departamentos = [];
 						
 						//Sum values by seller
@@ -67,6 +76,27 @@
 							RealML        += parseFloat(values.RealML);
 							RealUSD       += parseFloat(values.RealUSD);
 							TotalClientes += parseFloat(values.TotalClientes);
+							
+							if(values.PromesaML == "") {
+								
+							} else {
+								PRealML += parseFloat(values.PromesaML);
+							}
+							
+							
+							if(values.PromesaUSD == "") {
+								
+							} else {
+								PRealUSD += parseFloat(values.PromesaUSD);
+							}
+							
+							
+							if(values.TotalClientesVenta == "") {
+								
+							} else {
+								PTotalClientes += parseFloat(values.TotalClientesVenta);
+							}
+
 						});
 						
 						
@@ -96,9 +126,9 @@
 						//Create array for sellers
 						//sellers.push({ key : row.key, RealML : RealML, RealUSD : RealUSD, TotalClientes : TotalClientes, Departamentos : departamentos});
 						
-						document.getElementById('append').innerHTML += row.key + ',' + RealML + ',' +  RealUSD + ',' + TotalClientes + '<br/>';
+						document.getElementById('append').innerHTML += row.key + ',' + PRealML + ',' +  PRealUSD + ',' + PTotalClientes + '<br/>';
 						
-						sellers.push({ key : row.key, RealML : RealML, RealUSD : RealUSD, TotalClientes : TotalClientes});
+						sellers.push({ key : row.key, RealML : RealML, RealUSD : RealUSD, TotalClientes : TotalClientes, PRealML : PRealML, PRealUSD : PRealUSD, PTotalClientes : PTotalClientes});
 					}
 				});
 				
